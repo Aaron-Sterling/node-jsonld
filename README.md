@@ -13,6 +13,8 @@ npm install types/jsonld --save-dev
 
 ## Usage
 
+#### JSON-LD Operations
+
 You can either use the NodeJS ``require`` function, or ES6 import syntax, as follows.
 
 ```
@@ -28,7 +30,9 @@ compact(sourceFile, contextFile, targetFile).then(res => console.log(res));
 //     is an error message otherwise
 ```
 
-If not specified, the default value for the target file is ``targetFile.json``. Advanced users can specify options for the JSON-LD operations. If not specified, simple default options are used.
+If not specified, the default name for the target file is ``targetFile.json``. Advanced users can specify options for the JSON-LD operations. If not specified, simple default options are used.
+
+#### Help messages
 
 Help messages are available for all operations. The messages closely follow the documentation of jsonld.js. You can use a getter to grab each help message as a string, and then display it however you wish, such as in a tooltip.
 
@@ -41,3 +45,59 @@ const compactHelpMessage = getCompactHelpMessage();
 ## Related
 
 See also the JSON-LD NodeJS command line tool [jldc](https://github.com/Aaron-Sterling/jldc), which uses related code. Both node-jsonld and jldc have as a peer dependency the official JSON-LD Javascript library [jsonld.js](https://github.com/digitalbazaar/jsonld.js/), written and supported by DigitalBazaar. For Angular users, [ngx-jsonld-provider](https://github.com/Aaron-Sterling/ngx-jsonld-provider) is available, and Cory Rylan has written [ngx-json-ld](https://github.com/coryrylan/ngx-json-ld), which uses an Angular component (not a provider) to connect to JSON-LD operations.
+
+## API
+
+### JSON-LD Operations
+
+All these operations are of type ``Promise<string>``. If successful, they return the string ``'operation successful'``. If unsuccessful, they return an error code that usually specifies both the type of error and the file that caused the error. If not specified, the default name for the target file is ``targetFile.json``.
+
+#### Compact
+
+``compact(sourceFile: string, contextFile: string, targetFile?: string, options?: CompactOptions): Promise<string>``
+
+Runs the JSON-LD compact algorithm on the contents of ``sourceFile``, using the context in ``contextFile``, and writes the value to ``targetFile``. Default value for ``options`` is ``{}``.
+
+#### Expand
+
+``expand(sourceFile: string, targetFile?: string, options?: ExpandOptions): Promise<string>``
+
+Run the JSON-LD expand algorithm on the contents of ``sourceFile``. Write the result to ``targetFile``. Default value for ``options`` is ``{}``.
+
+#### Flatten
+
+``flatten(sourceFile: string, targetFile?: string, options?: FlattenOptions): Promise<string>``
+
+Run the JSON-LD flatten algorithm on the contents of ``sourceFile``. Write the result to ``targetFile``. Default value for ``options`` is ``{}``.
+
+#### Frame
+
+``frame(sourceFile: string, frameFile: string, targetFile?: string, options?: FrameOptions): Promise<string>``
+
+Run the JSON-LD frame algorithm on the contents of ``sourceFile``, using the frame in ``frameFile``, then write the result to ``targetFile``. Default value for ``options`` is ``{}``.
+
+#### Normalize
+
+``normalize(sourceFile: string, targetFile?: string, options?: NormalizeOptions): Promise<string>``
+
+Run the JSON-LD normalize algorithm (also called the canonize algorithm) on the contents of ``sourceFile``. Default value for ``options`` is ``{format: 'application/n-quads'}``.
+
+#### Serialize
+
+``serialize(sourceFile: string, targetFile:?: string, options?: ToRdfOptions): Promise<string>``
+
+Converts the JSON-LD in ``sourceFile`` to an RDF string. Default value for ``options`` is ``{format: 'application/n-quads'}``.
+
+### Help Message Getters
+
+The following help message getters are available. Each returns a string that is based on the jsonld.js documentation.
+
+```
+getCompactHelpMessage(): string 
+getDeserializeHelpMessage(): string
+getExpandHelpMessage(): string 
+getFlattenHelpMessage(): string 
+getFrameHelpMessage(): string 
+getNormalizeHelpMessage(): string 
+getSerializeHelpMessage(): string 
+```
