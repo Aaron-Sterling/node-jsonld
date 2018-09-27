@@ -50,7 +50,7 @@ See also the JSON-LD NodeJS command line tool [jldc](https://github.com/Aaron-St
 
 ### JSON-LD Operations
 
-All these operations are of type ``Promise<string>``. If successful, they return the string ``'operation successful'``. If unsuccessful, they return an error code that usually specifies both the type of error and the file that caused the error. If not specified, the default name for the target file is ``targetFile.json``.
+All these operations are of type ``Promise<string>``. If successful, they return the string ``'successful'``. If unsuccessful, they return an error code that usually specifies both the type of error and the file that caused the error. If not specified, the default name for the target file is ``targetFile.json``.
 
 #### Compact
 
