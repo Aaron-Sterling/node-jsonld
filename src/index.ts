@@ -1,0 +1,3 @@
+// entrypoint
+
+export * from './main';
