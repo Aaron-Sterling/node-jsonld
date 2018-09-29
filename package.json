@@ -1,6 +1,6 @@
 {
   "name": "node-jsonld",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "NodeJS interface with JSON-LD library. Run compact, expand, flatten algorithms, etc., by reading from and writing to local files. Verbose error messages and help messages are built in. Uses jsonld.js as a peer dependency and requires Node 8 or higher.",
   "main": "index.js",
   "repository": {
@@ -29,10 +29,12 @@
     "@types/jsonld": "github:types/jsonld"
   },
   "dependencies": {
-    "jsonld": "^1.1.0"
+    "inversify": "^4.13.0",
+    "jsonld": "^1.1.0",
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "@types/jsonld": "github:types/jsonld",
-    "@types/node": "^10.11.0"
+    "@types/node": "^10.11.3"
   }
 }

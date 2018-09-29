@@ -1,96 +1,100 @@
-// Main export source for JSON-LD operation calls and help message getters
+// Clean up point for parameters for JSON-LD operation calls
+// Also includes help message getters
 
-import { defaultTargetFile } from './commands/utils/default-target-file';
-import { compactAction } from './commands/compact/compact-action';
-import { deserializeAction } from './commands/deserialize/deserialize-action';
-import { expandAction } from './commands/expand/expand-action';
-import { flattenAction } from './commands/flatten/flatten-action';
-import { frameAction } from './commands/frame/frame-action';
-import { normalizeAction } from './commands/normalize/normalize-action';
-import { serializeAction } from './commands/serialize/serialize-action';
-import * as defaultOptions from './options-defaults';
+import { inject, injectable } from 'inversify';
+import { TYPES } from './inversify/types';
+//
+import { OperationService } from './operations/operationService';
+//
+import { defaultTargetFile } from './defaults/default-target-file';
+//
+import * as defaultOptions from './defaults/options-defaults';
 //
 import { HelpMessageTypes } from './core-providers/help-message-service/help-message-types';
 import { helpMessage } from './core-providers/help-message-service/help-message-service';
 
-// JSON-LD Operations
+@injectable()
+export class NodeJSONLD {
 
-// compact operation
-export function compact(sourceFile: string, contextFile: string, 
-                        targetFile = defaultTargetFile(), 
-                        options = defaultOptions.DEFAULT_COMPACT_OPTIONS): Promise<string> {
+    constructor(@inject(TYPES.OperationService) private operation: OperationService) {}
 
-    return compactAction(sourceFile, contextFile, targetFile, options);
-}
+    // JSON-LD Operations
 
-// deserialize (fromRDF) operation
-export function deserialize(sourceFile: string, targetFile = defaultTargetFile(),
-                            options = defaultOptions.DEFAULT_DESERIALIZE_OPTIONS): Promise<string> {
+    // compact operation
+    compact(sourceFile: string, contextFile: string,  targetFile = defaultTargetFile(), 
+                                options = defaultOptions.DEFAULT_COMPACT_OPTIONS): Promise<string> {
 
-    return deserializeAction(sourceFile, targetFile, options);
-}
+        return this.operation.compact(sourceFile, contextFile, targetFile, options);
+    }
 
-// expand operation
-export function expand(sourceFile: string, targetFile = defaultTargetFile(), 
-                       options = defaultOptions.DEFAULT_EXPAND_OPTIONS): Promise<string> {
-    
-    return expandAction(sourceFile, targetFile, options);
-}
+    // deserialize (fromRDF) operation
+    deserialize(sourceFile: string, targetFile = defaultTargetFile(),
+                                    options = defaultOptions.DEFAULT_DESERIALIZE_OPTIONS): Promise<string> {
 
-// flatten operation
-export function flatten(sourceFile: string, targetFile = defaultTargetFile(),
-                        options = defaultOptions.DEFAULT_FLATTEN_OPTIONS): Promise<string> {
+        return this.operation.deserialize(sourceFile, targetFile, options);
+    }
 
-    return flattenAction(sourceFile, targetFile, options);
-}
+    // expand operation
+    expand(sourceFile: string, targetFile = defaultTargetFile(), 
+                               options = defaultOptions.DEFAULT_EXPAND_OPTIONS): Promise<string> {
 
-// frame operation
-export function frame(sourceFile: string, frameFile: string, targetFile = defaultTargetFile(),
-                      options = defaultOptions.DEFAULT_FRAME_OPTIONS): Promise<string> {
+        return this.operation.expand(sourceFile, targetFile, options);
+    }
 
-    return frameAction(sourceFile, frameFile, targetFile, options);
-}
+    // flatten operation
+    flatten(sourceFile: string, targetFile = defaultTargetFile(), options = defaultOptions.DEFAULT_FLATTEN_OPTIONS): Promise<string> {
 
-// normalize operation
-export function normalize(sourceFile: string, targetFile = defaultTargetFile(),
-                          options = defaultOptions.DEFAULT_NORMALIZE_OPTIONS): Promise<string> {
-    
-    return normalizeAction(sourceFile, targetFile, options);
-}
+        return this.operation.flatten(sourceFile, targetFile, options);
+    }
 
-// serialize operation
-export function serialize(sourceFile: string, targetFile: string = defaultTargetFile(),
-                          options = defaultOptions.DEFAULT_SERIALIZE_OPTIONS): Promise<string> {
+    // frame operation
+    frame(sourceFile: string, frameFile: string, targetFile = defaultTargetFile(),
+                              options = defaultOptions.DEFAULT_FRAME_OPTIONS): Promise<string> {
 
-    return serializeAction(sourceFile, targetFile, options);
-}
+        return this.operation.frame(sourceFile, frameFile, targetFile, options);
+    }
 
-// help message getters
+    // normalize operation
+    normalize(sourceFile: string, targetFile = defaultTargetFile(),
+                                  options = defaultOptions.DEFAULT_NORMALIZE_OPTIONS): Promise<string> {
 
-export function getCompactHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.COMPACT);
-}
+        return this.operation.normalize(sourceFile, targetFile, options);
+    }
 
-export function getDeserializeHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.DESERIALIZE);
-}
+    // serialize operation
+    serialize(sourceFile: string, targetFile: string = defaultTargetFile(),
+                                  options = defaultOptions.DEFAULT_SERIALIZE_OPTIONS): Promise<string> {
 
-export function getExpandHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.EXPAND);
-}
+        return this.operation.serialize(sourceFile, targetFile, options);
+    }
 
-export function getFlattenHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.FLATTEN);
-}
+    // help message getters
 
-export function getFrameHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.FRAME);
-}
+    getCompactHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.COMPACT);
+    }
 
-export function getNormalizeHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.NORMALIZE);
-}
+    getDeserializeHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.DESERIALIZE);
+    }
 
-export function getSerializeHelpMessage(): string {
-    return helpMessage(HelpMessageTypes.SERIALIZE);
+    getExpandHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.EXPAND);
+    }
+
+    getFlattenHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.FLATTEN);
+    }
+
+    getFrameHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.FRAME);
+    }
+
+    getNormalizeHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.NORMALIZE);
+    }
+
+    getSerializeHelpMessage(): string {
+        return helpMessage(HelpMessageTypes.SERIALIZE);
+    }
 }

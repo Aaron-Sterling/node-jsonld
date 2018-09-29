@@ -4,8 +4,10 @@ NodeJS interface with JSON-LD library. Run compact, expand, flatten algorithms, 
 
 ## Installation
 
+You will need to install ``node-jsonld`` and three peer dependencies: ``jsonld`` (the main library), ``inversify`` and ``reflect-metadata`` (these latter two support the Inversion-of-Control-friendly code of ``node-jsonld``). If programming in Typescript, it's also advisable to install the types for ``jsonld`` as a dev dependency.
+
 ```
-npm install jsonld node-jsonld
+npm install jsonld inversify reflect-metadata node-jsonld
 npm install types/jsonld --save-dev
 ```
 
@@ -18,15 +20,15 @@ npm install types/jsonld --save-dev
 You can either use the NodeJS ``require`` function, or ES6 import syntax, as follows.
 
 ```
-import { compact } from 'node-jsonld';
+import { nodeJsonLd } from 'node-jsonld';
 
 const sourceFile = 'NameOfSourceFile.json';
 const contextFile = 'NameOfContextFile.json';
 const targetFile = 'NameOfTargetFile.json';
 
-compact(sourceFile, contextFile, targetFile).then(res => console.log(res)); 
+nodejsonLd.compact(sourceFile, contextFile, targetFile).then(res => console.log(res)); 
 
-// res is 'operation successful' if the compact operation was successful
+// res is 'successful' if the compact operation was successful
 //     is an error message otherwise
 ```
 
@@ -37,9 +39,9 @@ If not specified, the default name for the target file is ``targetFile.json``. A
 Help messages are available for all operations. The messages closely follow the documentation of jsonld.js. You can use a getter to grab each help message as a string, and then display it however you wish, such as in a tooltip.
 
 ```
-import { getcompactHelpMessage } from 'node-jsonld';
+import { nodeJsonLd } from 'node-jsonld';
 
-const compactHelpMessage = getCompactHelpMessage();
+const compactHelpMessage = nodeJsonLd.getCompactHelpMessage(); // returns a string
 ```
 
 ## Related
